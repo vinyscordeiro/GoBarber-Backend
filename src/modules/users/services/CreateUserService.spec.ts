@@ -19,13 +19,13 @@ describe('CreateUser', () => {
     const fakeUserRepository = new FakeUserRepository();
     const createUser = new CreateUserService(fakeUserRepository);
 
-    createUser.execute({
+    await createUser.execute({
       email: 'test@gobarber.com',
       name: 'John Doe Second',
       password: '1234567',
     });
 
-    expect(
+    await expect(
       createUser.execute({
         email: 'test@gobarber.com',
         name: 'John Doe Second',
