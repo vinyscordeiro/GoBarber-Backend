@@ -35,7 +35,10 @@ class AuthenticateUserService {
     // user.password é a senha no banco de dados criptografada.
     // password é a variável local que o usuário colocou não criptografada.
 
-    const passMatch = this.hashProvider.compareHash(user.password, password);
+    const passMatch = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
     // await compare(password, user.password);
     if (!passMatch) {
       throw new AppError('Incorrect email/password combination', 401);

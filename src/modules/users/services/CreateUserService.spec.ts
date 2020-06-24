@@ -3,11 +3,15 @@ import AppError from '@shared/errors/AppError';
 import CreateUserService from './CreateUserService';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
-describe('CreateUser', () => {
-  it('Should be able to create a new User', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
+let fakeUserRepository: FakeUserRepository;
+let fakeHashProvider: FakeHashProvider;
 
+describe('CreateUser', () => {
+  beforeEach(() => {
+    fakeUserRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
+  });
+  it('Should be able to create a new User', async () => {
     const createUser = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
@@ -23,9 +27,6 @@ describe('CreateUser', () => {
   });
 
   it('Should not be able to create a new User with the same email from another', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
     const createUser = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
