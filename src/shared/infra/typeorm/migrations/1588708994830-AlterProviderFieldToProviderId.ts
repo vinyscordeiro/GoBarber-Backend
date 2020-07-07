@@ -1,4 +1,4 @@
-import {
+/* import {
   MigrationInterface,
   QueryRunner,
   TableColumn,
@@ -39,3 +39,4 @@ export default class AlterProviderFieldToProviderId1588708994830
     );
   }
 }
+*/
