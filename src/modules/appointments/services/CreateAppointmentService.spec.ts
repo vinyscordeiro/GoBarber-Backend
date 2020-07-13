@@ -11,7 +11,10 @@ describe('CreateAppointment', () => {
   beforeEach(() => {
     fakeNotificationRepository = new FakeNotificationsRepository();
     fakeAppointmentRepository = new FakeAppointmentsRepository();
-    createAppointment = new CreateAppointmentService(fakeAppointmentRepository, fakeNotificationRepository);
+    createAppointment = new CreateAppointmentService(
+      fakeAppointmentRepository,
+      fakeNotificationRepository,
+    );
   });
 
   it('Should be able to create a new appointment', async () => {

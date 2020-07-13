@@ -7,7 +7,7 @@ import ICreateNotificationDTO from '@modules/notifications/dtos/ICreateNotificat
 class FakeNotificationsRepository implements INotificationsRepository {
   private notifications: Notification[] = [];
 
-  public async create( {
+  public async create({
     content,
     recipient_id,
   }: ICreateNotificationDTO): Promise<Notification> {
@@ -19,7 +19,6 @@ class FakeNotificationsRepository implements INotificationsRepository {
 
     return notification;
   }
-
 }
 
 export default FakeNotificationsRepository;

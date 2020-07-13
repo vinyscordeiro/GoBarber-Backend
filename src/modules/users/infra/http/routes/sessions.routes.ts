@@ -5,13 +5,15 @@ import { celebrate, Segments, Joi } from 'celebrate';
 const sessionsRouter = Router();
 const sessionsController = new SessionsController();
 
-sessionsRouter.post('/', 
-celebrate({
+sessionsRouter.post(
+  '/',
+  celebrate({
     [Segments.BODY]: {
-        email: Joi.string().email().required(),
-        password: Joi.string().required(),
-     }
-}), 
-sessionsController.create);
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  sessionsController.create,
+);
 
 export default sessionsRouter;
