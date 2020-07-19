@@ -6,9 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import uploadConfig from '@config/upload';
-
 import { Exclude, Expose } from 'class-transformer';
+import uploadConfig from '../../../../../config/upload';
 
 @Entity('users')
 class User {
@@ -29,7 +28,7 @@ class User {
   avatar: string;
 
   @CreateDateColumn()
-  create_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
@@ -43,7 +42,7 @@ class User {
       case 'disk':
         return `${process.env.APP_API_URL}/files/${this.avatar}`;
       case 's3':
-        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+        return `https://${uploadConfig.config.aws.bucket}.s3.console.aws.amazon.com/${this.avatar}`;
       default:
         return null;
     }

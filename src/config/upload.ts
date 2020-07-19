@@ -1,6 +1,6 @@
+import multer, { StorageEngine } from 'multer';
 import path from 'path';
 import crypto from 'crypto';
-import multer, { StorageEngine } from 'multer';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
@@ -16,6 +16,9 @@ interface IUploadConfig {
 
   config: {
     disk: {};
+    aws: {
+      bucket: string;
+    };
   };
 }
 
@@ -38,5 +41,8 @@ export default {
   },
   config: {
     disk: {},
+    aws: {
+      bucket: 'arquivos-gobarber',
+    },
   },
 } as IUploadConfig;

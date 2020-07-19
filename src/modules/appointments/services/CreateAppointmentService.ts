@@ -1,10 +1,13 @@
 import { startOfHour, isBefore, getHours, format } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
 import AppError from '@shared/errors/AppError';
+
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
 
 /*
  * [x] Recebimento das informações
@@ -28,12 +31,15 @@ class CreateAppointmentService {
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationsRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
-    date,
-    provider_id,
     user_id,
+    provider_id,
+    date,
   }: IRequestDTO): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
@@ -43,6 +49,7 @@ class CreateAppointmentService {
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
+      provider_id,
     );
     if (findAppointmentInSameDate) {
       throw new AppError('This appointment is already booked');
@@ -69,6 +76,13 @@ class CreateAppointmentService {
       recipient_id: provider_id,
       content: `Novo agendamento para a ${formatedDate}`,
     });
+
+    await this.cacheProvider.invalidate(
+      `provider-appointments:${provider_id}:${format(
+        appointmentDate,
+        'yyyy-M-d',
+      )}`,
+    );
 
     return appointment;
   }

@@ -28,7 +28,7 @@ class S3ImplementationProvider implements IStorageProvider {
 
     await this.client
       .putObject({
-        Bucket: 'arquivos-gobarber',
+        Bucket: uploadConfig.config.aws.bucket,
         Key: file,
         ACL: 'public-read',
         Body: fileContent,
@@ -36,13 +36,15 @@ class S3ImplementationProvider implements IStorageProvider {
       })
       .promise();
 
+    await fs.promises.unlink(originalPath);
+
     return file;
   }
 
   public async deleteFile(file: string): Promise<void> {
     await this.client
       .deleteObject({
-        Bucket: 'arquivos-gobarber',
+        Bucket: uploadConfig.config.aws.bucket,
         Key: file,
       })
       .promise();

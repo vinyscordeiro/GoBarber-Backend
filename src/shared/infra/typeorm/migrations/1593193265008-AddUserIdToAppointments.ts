@@ -8,7 +8,6 @@ import {
 export default class AddUserIdToAppointments1593193265008
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn('appointments', 'provider_id');
     await queryRunner.addColumn(
       'appointments',
       new TableColumn({
@@ -31,7 +30,7 @@ export default class AddUserIdToAppointments1593193265008
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('appointments', 'AppointmentsProvider');
+    await queryRunner.dropForeignKey('appointments', 'AppointmentUser');
     await queryRunner.dropColumn('appointments', 'user_id');
   }
 }
