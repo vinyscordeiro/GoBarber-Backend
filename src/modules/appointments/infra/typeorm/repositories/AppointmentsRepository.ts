@@ -29,7 +29,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     year,
     month,
   }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
-    const parsedMonth = String(month).padStart(2);
+    const parsedMonth = String(month).padStart(2, '0');
 
     const appointments = this.ormRepository.find({
       where: {
@@ -39,7 +39,6 @@ class AppointmentsRepository implements IAppointmentsRepository {
             `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
         ),
       },
-      relations: ['user'],
     });
     return appointments;
   }
@@ -50,8 +49,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
     year,
     month,
   }: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
-    const parsedDay = String(day).padStart(2);
-    const parsedMonth = String(month).padStart(2);
+    const parsedDay = String(day).padStart(2, '0');
+    const parsedMonth = String(month).padStart(2, '0');
 
     const appointments = this.ormRepository.find({
       where: {
@@ -61,6 +60,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
             `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
         ),
       },
+      relations: ['user'],
     });
     return appointments;
   }

@@ -1,9 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
+
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;
@@ -27,8 +28,8 @@ class UpdateProfileService {
     user_id,
     name,
     email,
-    password,
     old_password,
+    password,
   }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
 
@@ -44,6 +45,7 @@ class UpdateProfileService {
 
     user.name = name;
     user.email = email;
+
     if (password && !old_password) {
       throw new AppError('Old password is necessary to update your password');
     }
