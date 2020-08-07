@@ -42,7 +42,7 @@ let User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
 
   getAvatarUrl() {
     if (!this.avatar) {
-      return null;
+      return 'https://arquivos-gobarber.s3.eu-west-2.amazonaws.com/placeholder-user-400x400.png';
     }
 
     switch (_upload.default.driver) {
@@ -50,7 +50,7 @@ let User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
         return `${process.env.APP_API_URL}/files/${this.avatar}`;
 
       case 's3':
-        return `https://${_upload.default.config.aws.bucket}.s3.console.aws.amazon.com/${this.avatar}`;
+        return `https://${_upload.default.config.aws.bucket}.s3.amazonaws.com/${this.avatar}`;
 
       default:
         return null;

@@ -24,7 +24,7 @@ profileRouter.put('/', (0, _celebrate.celebrate)({
     name: _celebrate.Joi.string().required(),
     email: _celebrate.Joi.string().email().required(),
     old_password: _celebrate.Joi.string(),
-    password: _celebrate.Joi.string().required(),
+    password: _celebrate.Joi.string(),
     password_confirmation: _celebrate.Joi.string().valid(_celebrate.Joi.ref('password'))
   }
 }), profileController.update);

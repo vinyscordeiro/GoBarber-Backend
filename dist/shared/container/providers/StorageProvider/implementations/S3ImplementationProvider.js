@@ -7,9 +7,9 @@ exports.default = void 0;
 
 var _fs = _interopRequireDefault(require("fs"));
 
-var _path = _interopRequireDefault(require("path"));
-
 var _mime = _interopRequireDefault(require("mime"));
+
+var _path = _interopRequireDefault(require("path"));
 
 var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
