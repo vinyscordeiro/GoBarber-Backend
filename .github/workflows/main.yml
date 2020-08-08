@@ -41,7 +41,7 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        source: "dist"
+        source: "tests/a.txt,tests/b.txt"
         target: ""
 
     # Substituir o codigo existente na pasta dist pelo novo codigo
