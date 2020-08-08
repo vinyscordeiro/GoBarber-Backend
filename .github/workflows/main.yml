@@ -44,8 +44,8 @@ jobs:
         source: ".,!node_modules"
         target: "~/app/GoBarber-Backend"
         
-    # Executar yarn na digital ocean
-    - name: Run Yarn in ssh server
+    # Executar processos
+    - name: Run production services
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -55,25 +55,7 @@ jobs:
         script: |
           cd ~/app/GoBarber-Backend
           yarn
-        
-    # Execultar as migrations do typeorm
-    - name: Run migrations in ssh server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        port: ${{ secrets.SSH_PORT }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          cd ~/app/GoBarber-Backend
           ./node_modules/.bin/typeorm migration:run
+          pm2 restart gobarber-api
+        
 
-    # Resetar o servidor node.js
-    - name: Restart server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        port: ${{ secrets.SSH_PORT }}
-        key: ${{ secrets.SSH_KEY }}
-        script: pm2 restart gobarber-api
